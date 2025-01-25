@@ -11,14 +11,6 @@ const userSchema = new Schema ({
         trim : true,
         index: true, 
     },
-    userName : {
-        required : true,
-        type : String,
-        unique : true,
-        lowercase : true,    
-        trim : true,
-        index: true // searching field enable
-    },
     email : {
         required : true,
         type : String,
@@ -26,13 +18,11 @@ const userSchema = new Schema ({
         lowercase : true,    
         trim : true
     },
-    userName : {
+    fullName : {
         required : true,
         type : String,
-        unique : true,    
-        trim : true,
-        index: true
-    }, 
+        trim : true
+    },
     avatar : { 
         type : String, 
         required: true,
@@ -57,7 +47,7 @@ userSchemas.pre(
         if(!this.isModified("password")){
             return next();
         }
-        this.password = bcrypt.hash(this.password,10)
+        this.password = await bcrypt.hash(this.password,10)
         next();
     }
 )
